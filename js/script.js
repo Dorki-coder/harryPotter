@@ -1,14 +1,15 @@
 import data from "./data.js";
-console.log(data);
 
-let res = data;
+let school = "",
+  name = "",
+  filterName = [],
+  filterHouse = [],
+  main_div = document.createElement("div"),
+  main = document.querySelector("main"),
+  res = data;
 
-let main = document.querySelector("main");
-let main_div = document.createElement("div");
 main_div.className = "list";
-
 output(data);
-
 function output(array) {
   main_div.innerHTML = " ";
   for (let index = 0; index < array.length; index++) {
@@ -40,40 +41,32 @@ function trueToYes(params) {
   }
 }
 
-document.querySelector("select").addEventListener("change", listener);
-document.querySelector("input").addEventListener("input", listener);
-// let val = this.value.toLocaleLowerCase();
-// if (val != "") {
-//   res = data.filter((elem) => {
-//     return elem.house.toLocaleLowerCase().includes(val);
-//   });
-//   output(res);
-// } else output(data);
+document.querySelector("select").addEventListener("change", filterByHouse);
+document.querySelector("input").addEventListener("input", filterByName);
 
-function listener() {
-  let val = this.value.trim().toLocaleLowerCase();
-  let house = "";
-  let name = "";
-  if (
-    val == "gryffindor" ||
-    val == "slytherin" ||
-    val == "hufflepuf" ||
-    val == "ravenclaw"
-  ) {
-    house = val;
-  } else {
-    name = val;
+function filterByName() {
+  name = this.value.trim().toLocaleLowerCase();
+  if (school == "") {
+    res = data;
+    filterHouse = [];
   }
-  console.log(house);
-  if (val != " " && val.length > 1) {
-    res = data.filter((elem) => {
-      if (
-        elem.house.toLocaleLowerCase().includes(house) &&
-        elem.name.toLocaleLowerCase().includes(name)
-      )
-        return this;
-    });
-  } else output(data);
+  if (filterHouse.length > 0) res = filterHouse;
+  console.log(name);
+  filterName = res.filter((elem) => {
+    return elem.name.toLocaleLowerCase().includes(name);
+  });
+  output(filterName);
+}
 
-  output(res);
+function filterByHouse() {
+  school = this.value.trim().toLocaleLowerCase();
+  if (name == "") {
+    res = data;
+    filterName = [];
+  }
+  if (filterName.length > 0) res = filterName;
+  filterHouse = res.filter((elem) => {
+    return elem.house.toLocaleLowerCase().includes(school);
+  });
+  output(filterHouse);
 }
