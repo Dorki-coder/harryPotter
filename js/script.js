@@ -41,32 +41,17 @@ function trueToYes(params) {
   }
 }
 
-document.querySelector("select").addEventListener("change", filterByHouse);
-document.querySelector("input").addEventListener("input", filterByName);
-
-function filterByName() {
-  name = this.value.trim().toLocaleLowerCase();
-  if (school == "") {
-    res = data;
-    filterHouse = [];
-  }
-  if (filterHouse.length > 0) res = filterHouse;
-  console.log(name);
-  filterName = res.filter((elem) => {
-    return elem.name.toLocaleLowerCase().includes(name);
-  });
-  output(filterName);
-}
-
-function filterByHouse() {
-  school = this.value.trim().toLocaleLowerCase();
-  if (name == "") {
-    res = data;
-    filterName = [];
-  }
-  if (filterName.length > 0) res = filterName;
-  filterHouse = res.filter((elem) => {
-    return elem.house.toLocaleLowerCase().includes(school);
+document.querySelector("select").addEventListener("change", filterBy);
+document.querySelector("input").addEventListener("input", filterBy);
+function filterBy() {
+  let name = document.querySelector("input").value;
+  let house = document.querySelector("select").value;
+  console.log(house);
+  filterHouse = data.filter((elem) => {
+    return (
+      elem.house.includes(house) &&
+      elem.name.toLowerCase().includes(name.toLowerCase())
+    );
   });
   output(filterHouse);
 }
